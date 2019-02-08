@@ -120,6 +120,24 @@ public class WMSMobileService extends Service {
         }
         return status;
     }
+    public boolean sendMessage(String message){
+        String METHOD_SERVER = new clsHardCode().txtMethodMessage;
+        boolean status = false;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", "android Roberto");
+            jsonObject.put("desc", "Message");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (mHubConnection.getConnectionId() != null) {
+            mHubProxy.invoke(METHOD_SERVER, jsonObject.toString());
+            status = true;
+        } else {
+            status = false;
+        }
+        return status;
+    }
 
     public boolean getRole(String txtEmail, String pInfo) {
         String METHOD_SERVER = new clsHardCode().txtMethodServerGetRole;
@@ -370,7 +388,7 @@ public class WMSMobileService extends Service {
 
 
 //        String serverUrl = "http://wms.kalbenutritionals.web.id/mobileapi";
-        String serverUrl = "http://10.171.14.37/RobertoSignalR/";
+        String serverUrl = "http://192.168.43.55/RobertoSignalR";
 
         mHubConnection = new HubConnection(serverUrl);
         String SERVER_HUB_CHAT = new clsHardCode().txtServerHubName;

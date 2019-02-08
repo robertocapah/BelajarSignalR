@@ -13,12 +13,15 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import net.robertocapah.belajarsignalr.BL.SignalRBL;
+import net.robertocapah.belajarsignalr.ViewModel.VWPeople;
+import net.robertocapah.belajarsignalr.adapter.AdapterListBasic;
 import net.robertocapah.belajarsignalr.addson.ConnectivityReceiver;
 import net.robertocapah.belajarsignalr.services.WMSMobileService;
 
@@ -27,6 +30,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -35,13 +40,16 @@ public class MainActivity extends clsMainActivity implements View.OnClickListene
     private CoordinatorLayout coordinatorLayout;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     ConnectivityManager conMan;
+    RecyclerView rvContent;
     Button btnGas;
+    AdapterListBasic adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         btnGas = (Button) findViewById(R.id.btnAction);
+        rvContent = (RecyclerView) findViewById(R.id.recyclerViewContent);
         Intent service = new Intent(MainActivity.this, WMSMobileService.class);
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Loading... Please Wait");
@@ -53,7 +61,8 @@ public class MainActivity extends clsMainActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
 //                sendRequestLogin();
-                requestCheckVersion("AND.2018.002");
+//                requestCheckVersion("AND.2018.002");
+                sendMassage("hello world");
             }
         });
     }
@@ -82,6 +91,22 @@ public class MainActivity extends clsMainActivity implements View.OnClickListene
         if (versionName != null) {
             progressDialog.show();
             status = new WMSMobileService().getDataLastVersion(versionName);
+            if (!status) {
+                new clsMainActivity().checkConnection(coordinatorLayout, conMan);
+                progressDialog.dismiss();
+//                btnCheckVersion.setVisibility(View.VISIBLE);
+//                llContentWarning.setVisibility(View.VISIBLE);
+            }
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+    private void sendMassage(String message) {
+        boolean status;
+        if (message != null) {
+            progressDialog.show();
+            status = new WMSMobileService().sendMessage(message);
             if (!status) {
                 new clsMainActivity().checkConnection(coordinatorLayout, conMan);
                 progressDialog.dismiss();
@@ -127,7 +152,7 @@ public class MainActivity extends clsMainActivity implements View.OnClickListene
 //            }
         }
         else {
-            snackbarWithNoAction(coordinatorLayout,"No Connectivity", status, "");
+//            snackbarWithNoAction(coordinatorLayout,"No Connectivity", status, "");
         }
     }
 
@@ -218,6 +243,13 @@ public class MainActivity extends clsMainActivity implements View.OnClickListene
     @Override
     public void onReceiveMessageHub(JSONObject jsonObject) {
     int a= 1;
+        VWPeople ppl = new VWPeople();
+        ppl.setTxtChat("hello world");
+        ppl.setTxtName("Roberto");
+        List<VWPeople> ltPpl = new ArrayList<>();
+        ltPpl.add(ppl);
+        adapter = new AdapterListBasic(this,ltPpl);
+        rvContent.setAdapter(adapter);
     }
 
     @Override

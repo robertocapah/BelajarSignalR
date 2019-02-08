@@ -708,7 +708,7 @@ public class clsMainActivity extends AppCompatActivity implements WMSMobileServi
         Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
         View snackBarView = snackbar.getView();
         if(status){
-            snackBarView.setBackgroundResource(R.color.color_primary_blue);
+            snackBarView.setBackgroundResource(R.color.colorAccent);
         } else {
             snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE);
             snackBarView = snackbar.getView();
@@ -770,7 +770,7 @@ public class clsMainActivity extends AppCompatActivity implements WMSMobileServi
 //            }
         }
         else {
-            snackbarWithNoAction(coordinatorLayout,"No Connectivity", status, "");
+//            snackbarWithNoAction(coordinatorLayout,"No Connectivity", status, "");
         }
     }
 

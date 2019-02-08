@@ -25,12 +25,16 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    implementation files('libs/signalr-client-sdk-android.jar')
+    implementation files('libs/signalr-client-sdk.jar')
+
+    // third party dependencies -------------------------------------------------------------------
+    implementation 'com.balysv:material-ripple:1.0.2'                  // ripple effect
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'com.android.support:design:27.1.1'
     //    implementation 'com.facebook.stetho:stetho-okhttp:1.2.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
-    implementation files('libs/signalr-client-sdk-android.jar')
-    implementation files('libs/signalr-client-sdk.jar')
+    implementation 'com.github.bumptech.glide:glide:3.7.0'             // image loader
 }

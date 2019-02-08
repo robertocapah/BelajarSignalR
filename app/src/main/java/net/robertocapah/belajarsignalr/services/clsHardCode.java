@@ -8,6 +8,7 @@ class clsHardCode {
     public String txtServerHubName = "hubAPI";
     public String txtMethodServerGetRole = "getRoleByUsername";
     public String txtMethodServerGetVersionName = "getDataLastVersion";
+    public String txtMethodMessage = "Send";
     public String txtMethodServerLogin = "login";
     public String txtMethodServerLogout = "logout";
     public String txtMethodServerGetNoSPM = "getDataSPM";
